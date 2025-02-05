@@ -6,13 +6,7 @@ import { getFirestore } from "firebase/firestore";
 
 // Mi configuración de Firebase
 const firebaseConfig = {
-  //variables locales
-  // apiKey: "AIzaSyC9mSVmcbb6aliKlWOWFLKf95GywB5gQyQ",
-  // authDomain: "e-commers-2a806.firebaseapp.com",
-  // projectId: "e-commers-2a806",
-  // storageBucket: "e-commers-2a806.firebasestorage.app",
-  // messagingSenderId: "1011817694451",
-  // appId: "1:1011817694451:web:ea8ec51cd6bc1e1a5ea386",
+  
 
   //variables de entorno invocadas desde .env
   apiKey: import.meta.env.VITE_FIREBASE_KEY,
