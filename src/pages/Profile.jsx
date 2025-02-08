@@ -173,8 +173,13 @@ const Profile = () => {
           </Button>
         </FormControl>
 
-        <Heading as="h2" size="lg" mt={4}>
-          Historial de Compras
+        <Heading
+          as="h2"
+          size="lg"
+          mt={4}
+          bgGradient="linear(to-l,rgb(144, 199, 198),rgb(184, 220, 180))"
+        >
+          Historial de Compras 🛒
         </Heading>
         {loading ? (
           <Text>Cargando historial de compras...</Text>

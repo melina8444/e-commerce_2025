@@ -1,13 +1,13 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { VStack, Heading, Text } from "@chakra-ui/react";
 
 const Home = () => {
   return (
-    <Box p={4}>
+    <VStack p={4}>
       <Heading as="h1" size="xl" mb={4}>
         Bienvenido a Mi Ecommerce 💕😜
       </Heading>
       <Text fontSize="lg">Explora nuestros productos destacados.</Text>
-    </Box>
+    </VStack>
   );
 };
 

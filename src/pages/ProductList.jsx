@@ -8,6 +8,7 @@ import {
   Spinner,
   Link,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { db } from "../services/config";
@@ -19,6 +20,7 @@ const ProductList = () => {
   const { addToCart } = useCart();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const toast = useToast(); 
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -34,6 +36,17 @@ const ProductList = () => {
     fetchProducts();
   }, []);
 
+  const handleAddToCart = (product) => {
+    addToCart(product); // Agrego el producto al carrito
+    toast({
+      title: "Producto agregado",
+      description: `${product.name} se ha agregado al carrito.`,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
   if (loading) {
     return (
       <Box textAlign="center" mt={10}>
@@ -44,33 +57,45 @@ const ProductList = () => {
 
   
     return (
-    <Box p={4}>
-      <Heading as="h2" size="lg" mb={4}>
-        Todos los Productos
-      </Heading>
-      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
-        {products.map((product) => (
-          <Box key={product.id} borderWidth="1px" borderRadius="lg" overflow="hidden" p={4}>
-            <Image src={product.image} alt={product.name} boxSize="200px" objectFit="cover" mx="auto" />
-            <Heading as="h3" size="md" mt={2} textAlign="center">
-              {product.name}
-            </Heading>
-            <Text fontSize="lg" fontWeight="bold" mt={2} textAlign="center">
-              ${product.price}
-            </Text>
-            <Button
-              colorScheme="teal"
-              mt={2}
-              w="full"
-              onClick={() => addToCart(product)}
+      <Box p={4}>
+        <Heading as="h2" size="lg" mb={4}>
+          Todos los Productos
+        </Heading>
+        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
+          {products.map((product) => (
+            <Box
+              key={product.id}
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              p={4}
             >
-              Agregar al carrito
-            </Button>
-          </Box>
-        ))}
-      </SimpleGrid>
-    </Box>
-  );
+              <Image
+                src={product.image}
+                alt={product.name}
+                boxSize="200px"
+                objectFit="cover"
+                mx="auto"
+              />
+              <Heading as="h3" size="md" mt={2} textAlign="center">
+                {product.name}
+              </Heading>
+              <Text fontSize="lg" fontWeight="bold" mt={2} textAlign="center">
+                ${product.price}
+              </Text>
+              <Button
+                colorScheme="teal"
+                mt={2}
+                w="full"
+                onClick={() => handleAddToCart(product)}
+              >
+                Agregar al carrito
+              </Button>
+            </Box>
+          ))}
+        </SimpleGrid>
+      </Box>
+    );
 };
 
 

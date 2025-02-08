@@ -6,6 +6,7 @@ import {
   Button,
   VStack,
   Spinner,
+  useToast,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -18,6 +19,7 @@ const ProductDetail = () => {
   const { id } = useParams(); // Obtengo el ID del producto desde la URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const toast = useToast();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -34,6 +36,18 @@ const ProductDetail = () => {
 
     fetchProduct();
   }, [id]);
+
+   const handleAddToCart = (product) => {
+     addToCart(product); // Agrego el producto al carrito
+     toast({
+       title: "Producto agregado",
+       description: `${product.name} se ha agregado al carrito.`,
+       status: "success",
+       duration: 3000,
+       isClosable: true,
+     });
+   };
+
 
   if (loading) {
     return (
@@ -53,22 +67,31 @@ const ProductDetail = () => {
 
   
     return (
-    <Box p={4}>
-      <VStack spacing={4} align="center">
-        <Image src={product.image} alt={product.name} boxSize="300px" objectFit="cover" />
-        <Heading as="h1" size="xl">
-          {product.name}
-        </Heading>
-        <Text fontSize="2xl" fontWeight="bold">
-          ${product.price}
-        </Text>
-        <Text>{product.description || 'Descripción no disponible'}</Text>
-        <Button colorScheme="teal" size="lg" onClick={() => addToCart(product)}>
-          Agregar al carrito
-        </Button>
-      </VStack>
-    </Box>
-  );
+      <Box p={4}>
+        <VStack spacing={4} align="center">
+          <Image
+            src={product.image}
+            alt={product.name}
+            boxSize="300px"
+            objectFit="cover"
+          />
+          <Heading as="h1" size="xl">
+            {product.name}
+          </Heading>
+          <Text fontSize="2xl" fontWeight="bold">
+            ${product.price}
+          </Text>
+          <Text>{product.description || "Descripción no disponible"}</Text>
+          <Button
+            colorScheme="teal"
+            size="lg"
+            onClick={() => handleAddToCart(product)}
+          >
+            Agregar al carrito
+          </Button>
+        </VStack>
+      </Box>
+    );
   
 };
 
